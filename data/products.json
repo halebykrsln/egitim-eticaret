@@ -1,12 +1,13 @@
 [
   {
-    "id": 1752793948968,
-    "title": "aa",
-    "description": "aaa",
-    "oldPrice": 3,
-    "newPrice": 7,
+    "id": 1752844318557,
+    "title": "aaaaaaa",
+    "description": "aaaaaaaa",
+    "oldPrice": 4,
+    "newPrice": 10,
     "images": [],
     "categoryId": "1752793562091",
-    "createdAt": "2025-07-17T23:12:28.968Z"
+    "createdAt": "2025-07-18T13:11:58.557Z",
+    "updatedAt": "2025-07-18T13:21:19.139Z"
   }
 ]

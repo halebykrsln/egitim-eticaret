@@ -25,7 +25,7 @@ const addProduct = (req, res) => {
 
     const products = JSON.parse(data);
     const newId = Date.now();
-    
+
     const imagePath = req.file ? `/images/${req.file.filename}` : '';
 
     const newProduct = {
@@ -48,7 +48,61 @@ const addProduct = (req, res) => {
   });
 };
 
+// TÜM ÜRÜNLERİ GETİR
+const getProducts = (req, res) => {
+  const products = readJSON('products.json');
+  res.json(products);
+};
+
+// ÜRÜN SİL
+const deleteProduct = (req, res) => {
+  const id = parseInt(req.params.id);
+  let products = readJSON('products.json');
+  const exists = products.find(p => p.id === id);
+
+  if (!exists) return res.status(404).json({ error: 'Ürün bulunamadı.' });
+
+  products = products.filter(p => p.id !== id);
+  writeJSON('products.json', products);
+
+  res.json({ success: true });
+};
+
+// ÜRÜN GÜNCELLE
+const updateProduct = (req, res) => {
+  const id = parseInt(req.params.id);
+  let products = readJSON('products.json');
+  const index = products.findIndex(p => p.id === id);
+
+  if (index === -1) {
+    return res.status(404).json({ error: 'Ürün bulunamadı.' });
+  }
+
+  const existing = products[index];
+  const { title, description, oldPrice, newPrice, images, categoryId } = req.body;
+
+  const updated = {
+    ...existing,
+    title: title || existing.title,
+    description: description || existing.description,
+    oldPrice: Number(oldPrice) || existing.oldPrice,
+    newPrice: Number(newPrice) || existing.newPrice,
+    images: images || existing.images,
+    categoryId: categoryId || existing.categoryId,
+    updatedAt: new Date()
+  };
+
+  products[index] = updated;
+  writeJSON('products.json', products);
+
+  res.json({ success: true, product: updated });
+};
+
+// EXPORT
 module.exports = {
   upload,
-  addProduct
+  addProduct,
+  getProducts,
+  deleteProduct,
+  updateProduct
 };

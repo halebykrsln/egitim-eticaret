@@ -17,6 +17,8 @@ app.use('/api/categories', categoryRoutes);
 const productRoutes = require('./routes/productRoutes');
 app.use('/api/products', productRoutes);
 
+const sliderRoutes = require('./routes/sliderRoutes');
+app.use('/api/sliders', sliderRoutes);
 
 // Test sayfası
 app.get('/', (req, res) => {
