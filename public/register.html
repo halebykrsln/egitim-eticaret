@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Kayıt Ol - ATANIYORUM-HOCAM</title>
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f2f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .register-box {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      width: 350px;
+    }
+    .register-box h2 {
+      margin-bottom: 20px;
+      color: #2c3e50;
+      text-align: center;
+    }
+    .register-box input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .register-box button {
+      width: 100%;
+      background: #27ae60;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .register-box button:hover {
+      background: #219150;
+    }
+    .message {
+      margin-top: 10px;
+      text-align: center;
+      color: red;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="register-box">
+    <h2>Kayıt Ol</h2>
+    <form id="registerForm">
+      <input type="text" id="name" placeholder="Adınız Soyadınız" required>
+      <input type="email" id="email" placeholder="E-posta" required>
+      <input type="password" id="password" placeholder="Şifre" required>
+      <button type="submit">Kayıt Ol</button>
+    </form>
+    <div class="message" id="messageBox"></div>
+  </div>
+
+  <script>
+    const form = document.getElementById('registerForm');
+    const messageBox = document.getElementById('messageBox');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      messageBox.textContent = '';
+
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+
+      const response = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, password })
+      });
+
+      const result = await response.json();
+      if (result.success) {
+        messageBox.style.color = 'green';
+        messageBox.textContent = 'Kayıt başarılı! Giriş sayfasına yönlendiriliyorsunuz...';
+        setTimeout(() => {
+          window.location.href = '/login.html';
+        }, 2000);
+      } else {
+        messageBox.style.color = 'red';
+        messageBox.textContent = result.error || 'Bir hata oluştu.';
+      }
+    });
+  </script>
+
+</body>
+</html>
