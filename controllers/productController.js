@@ -1,34 +1,54 @@
-const { readJSON, writeJSON } = require('../utils/jsonUtils');
+const fs = require('fs');
+const path = require('path');
+const multer = require('multer');
 
-const getProducts = (req, res) => {
-  const products = readJSON('products.json');
-  res.json(products);
-};
+const dataPath = path.join(__dirname, '../data/products.json');
 
-const addProduct = (req, res) => {
-  const { title, description, oldPrice, newPrice, images, categoryId } = req.body;
-
-  if (!title || !newPrice || !categoryId) {
-    return res.status(400).json({ error: "Zorunlu alanlar eksik." });
+// 🔧 Multer ayarları
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'public/images'); // Görsellerin kaydedileceği yer
+  },
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    const ext = path.extname(file.originalname);
+    cb(null, file.fieldname + '-' + uniqueSuffix + ext);
   }
+});
 
-  const products = readJSON('products.json');
+const upload = multer({ storage });
 
-  const newProduct = {
-    id: Date.now(),
-    title,
-    description,
-    oldPrice: Number(oldPrice) || null,
-    newPrice: Number(newPrice),
-    images: images || [],
-    categoryId,
-    createdAt: new Date()
-  };
+// 🔥 Ürün Ekleme - Görselle birlikte
+const addProduct = (req, res) => {
+  fs.readFile(dataPath, 'utf8', (err, data) => {
+    if (err) return res.status(500).json({ error: 'Ürünler okunamadı' });
 
-  products.push(newProduct);
-  writeJSON('products.json', products);
+    const products = JSON.parse(data);
+    const newId = Date.now();
+    
+    const imagePath = req.file ? `/images/${req.file.filename}` : '';
 
-  res.json({ success: true, product: newProduct });
+    const newProduct = {
+      id: newId,
+      title: req.body.title,
+      description: req.body.description,
+      oldPrice: Number(req.body.oldPrice),
+      newPrice: Number(req.body.newPrice),
+      images: imagePath ? [imagePath] : [],
+      categoryId: req.body.categoryId,
+      createdAt: new Date().toISOString()
+    };
+
+    products.push(newProduct);
+
+    fs.writeFile(dataPath, JSON.stringify(products, null, 2), err => {
+      if (err) return res.status(500).json({ error: 'Ürün kaydedilemedi' });
+      res.status(201).json(newProduct);
+    });
+  });
 };
 
-module.exports = { getProducts, addProduct };
+module.exports = {
+  upload,
+  addProduct
+};
