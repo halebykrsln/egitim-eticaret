@@ -1,238 +1,329 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <title>Admin Paneli - ATANIYORUM-HOCAM</title>
+  <meta charset="UTF-8" />
+  <title>Atanıyorum Hocam Admin Paneli</title>
   <style>
     * { box-sizing: border-box; }
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background: #f7f7f7;
-    }
-    header {
-      background: #c0392b;
-      color: white;
-      padding: 15px;
-      text-align: center;
-    }
-    nav {
-      background: #2c3e50;
-      padding: 10px;
-      display: flex;
-      justify-content: space-around;
-    }
+    body { font-family: Arial; margin: 0; background: #f7f7f7; }
+    header { background: #c0392b; color: white; padding: 15px; text-align: center; }
+    nav { background: #2c3e50; padding: 10px; display: flex; justify-content: space-around; }
     nav button {
-      background: #34495e;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      cursor: pointer;
-      border-radius: 5px;
+      background: #34495e; color: white; border: none; padding: 10px 20px;
+      cursor: pointer; border-radius: 5px;
     }
-    nav button:hover {
-      background: #3d5d7a;
-    }
-    section {
-      display: none;
-      padding: 20px;
-    }
-    section.active {
-      display: block;
-    }
+    nav button:hover { background: #3d5d7a; }
+    section { display: none; padding: 20px; }
+    section.active { display: block; }
     input, textarea, select {
-      width: 100%;
-      padding: 8px;
-      margin: 8px 0;
-      border: 1px solid #ccc;
-      border-radius: 5px;
+      width: 100%; padding: 8px; margin: 8px 0;
+      border: 1px solid #ccc; border-radius: 5px;
     }
     button.save {
-      background: #27ae60;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      margin-top: 10px;
-      border-radius: 5px;
+      background: #27ae60; color: white; border: none;
+      padding: 10px 20px; margin-top: 10px; border-radius: 5px;
     }
-    .list {
-      margin-top: 10px;
-      background: white;
-      padding: 10px;
-      border-radius: 5px;
-    }
+    .list { margin-top: 10px; background: white; padding: 10px; border-radius: 5px; }
   </style>
 </head>
 <body>
 
-  <header>
-    <h1>ATANIYORUM-HOCAM | Admin Paneli</h1>
-  </header>
+<header><h1>Atanıyorum Hocam Admin Paneli</h1></header>
 
-  <nav>
-    <button onclick="showSection('kategori')">Kategori Yönetimi</button>
-    <button onclick="showSection('urun')">Ürün Yönetimi</button>
-    <button onclick="showSection('slider')">Slider Yönetimi</button>
-  </nav>
+<nav>
+  <button onclick="showSection('kategori')">Kategori Yönetimi</button>
+  <button onclick="showSection('urun')">Ürün Yönetimi</button>
+  <button onclick="showSection('slider')">Slider Yönetimi</button>
+</nav>
 
-  <!-- KATEGORİ -->
-  <section id="kategori" class="active">
-    <h2>Kategori Ekle</h2>
-    <input type="text" id="kategoriAd" placeholder="Kategori adı">
-    <button class="save" onclick="kategoriEkle()">Ekle</button>
-    <div class="list" id="kategoriListesi"></div>
-  </section>
+<!-- KATEGORİ -->
+<section id="kategori" class="active">
+  <h2>Ana Kategori Ekle</h2>
+  <input type="text" id="kategoriAd" placeholder="Ana kategori adı" />
+  <input type="number" id="kategoriUrunSayisi" placeholder="Ürün sayısı" />
+  <button class="save" onclick="kategoriEkle()">Ekle</button>
 
-  <!-- ÜRÜN -->
-  <section id="urun">
-    <h2>Ürün Ekle</h2>
-    <input type="text" id="urunBaslik" placeholder="Ürün Başlığı">
-    <textarea id="urunAciklama" placeholder="Açıklama"></textarea>
-    <input type="number" id="urunEskiFiyat" placeholder="Eski Fiyat">
-    <input type="number" id="urunYeniFiyat" placeholder="Yeni Fiyat">
-    <input type="text" id="urunGorsel" placeholder="Görsel URL (virgülle ayır)">
-    <select id="urunKategori">
-      <option value="">Kategori Seç</option>
-    </select>
-    <button class="save" onclick="urunEkle()">Ürün Ekle</button>
-    <div class="list" id="urunListesi"></div>
-  </section>
+  <h3>Alt Kategori Ekle</h3>
+  <select id="anaKategoriSec"></select>
+  <input type="text" id="altKategoriAd" placeholder="Alt kategori adı" />
+  <input type="number" id="altKategoriUrunSayisi" placeholder="Ürün sayısı" />
+  <button class="save" onclick="altKategoriEkle()">Alt Kategori Ekle</button>
 
-  <!-- SLIDER -->
-  <section id="slider">
-    <h2>Slider Yönetimi</h2>
-    <label>Kırmızı Slider Başlık:</label>
-    <input type="text" id="sliderKirmizi" placeholder="Başlık">
-    <label>Yeşil Slider Başlık:</label>
-    <input type="text" id="sliderYesil" placeholder="Başlık">
-    <button class="save" onclick="sliderKaydet()">Slider Kaydet</button>
-  </section>
+  <div class="list" id="kategoriListesi"></div>
+</section>
 
-  <script>
-    function showSection(id) {
-      document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-    }
+<!-- ÜRÜN -->
+<section id="urun">
+  <h2>Ürün Ekle / Güncelle</h2>
+  <input type="text" id="urunBaslik" placeholder="Ürün Başlığı" />
+  <textarea id="urunAciklama" placeholder="Açıklama"></textarea>
+  <input type="number" id="urunEskiFiyat" placeholder="Eski Fiyat" />
+  <input type="number" id="urunYeniFiyat" placeholder="Yeni Fiyat" />
+  <input type="text" id="urunGorsel" placeholder="Görsel URL (virgülle ayır)" />
+  <select id="urunKategori"><option value="">Kategori Seç</option></select>
+  <button class="save" onclick="urunEkle()">Ürün Ekle</button>
+  <div class="list" id="urunListesi"></div>
+</section>
 
-    async function kategoriEkle() {
-      const ad = document.getElementById('kategoriAd').value.trim();
-      if (!ad) return alert('Kategori adı girin.');
+<!-- SLIDER -->
+<section id="slider">
+  <h2>Slider Yönetimi</h2>
+  <label>Kırmızı Slider Başlık:</label>
+  <input type="text" id="sliderKirmizi" placeholder="Başlık" />
+  <label>Yeşil Slider Başlık:</label>
+  <input type="text" id="sliderYesil" placeholder="Başlık" />
+  <button class="save" onclick="sliderKaydet()">Slider Kaydet</button>
+</section>
 
-      const response = await fetch('/api/categories', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: ad })
-      });
+<script>
+  function showSection(id) {
+    document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  }
 
-      const result = await response.json();
-      if (result.success) {
-        kategoriListele();
-        kategoriDoldurSelect();
-        document.getElementById('kategoriAd').value = '';
-      } else {
-        alert(result.error || 'Hata oluştu.');
-      }
-    }
-
-    async function kategoriListele() {
-      const res = await fetch('/api/categories');
-      const categories = await res.json();
-      const div = document.getElementById('kategoriListesi');
-      div.innerHTML = '';
-      categories.forEach(k => {
-        const item = document.createElement('div');
-        item.textContent = `• ${k.name}`;
-        div.appendChild(item);
-      });
-    }
-
-    async function kategoriDoldurSelect() {
-      const res = await fetch('/api/categories');
-      const categories = await res.json();
-      const select = document.getElementById('urunKategori');
-      select.innerHTML = '<option value="">Kategori Seç</option>';
-      categories.forEach(cat => {
-        const option = document.createElement('option');
-        option.value = cat.id;
-        option.textContent = cat.name;
-        select.appendChild(option);
-      });
-    }
-
-    async function urunEkle() {
-      const title = document.getElementById('urunBaslik').value.trim();
-      const description = document.getElementById('urunAciklama').value.trim();
-      const oldPrice = document.getElementById('urunEskiFiyat').value;
-      const newPrice = document.getElementById('urunYeniFiyat').value;
-      const imageInput = document.getElementById('urunGorsel').value.trim();
-      const categoryId = document.getElementById('urunKategori').value;
-
-      if (!title || !newPrice || !categoryId) {
-        return alert("Başlık, Yeni Fiyat ve Kategori zorunludur.");
-      }
-
-      const images = imageInput ? imageInput.split(',').map(i => i.trim()) : [];
-
-      const response = await fetch('/api/products', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title, description, oldPrice, newPrice, images, categoryId })
-      });
-
-      const result = await response.json();
-      if (result.success) {
-        alert("✅ Ürün başarıyla eklendi.");
-        document.getElementById('urunBaslik').value = '';
-        document.getElementById('urunAciklama').value = '';
-        document.getElementById('urunEskiFiyat').value = '';
-        document.getElementById('urunYeniFiyat').value = '';
-        document.getElementById('urunGorsel').value = '';
-        document.getElementById('urunKategori').value = '';
-        urunListele();
-      } else {
-        alert(result.error || 'Bir hata oluştu.');
-      }
-    }
-
-    async function urunListele() {
-      const res = await fetch('/api/products');
-      const products = await res.json();
-
-      const div = document.getElementById('urunListesi');
-      div.innerHTML = '';
-
-      if (!products.length) {
-        div.innerHTML = '<p>Henüz ürün yok.</p>';
-        return;
-      }
-
-      products.forEach(p => {
-        const urun = document.createElement('div');
-        urun.style.borderBottom = "1px solid #ccc";
-        urun.style.padding = "10px";
-        urun.innerHTML = `
-          <strong>${p.title}</strong><br>
-          <em>${p.description || 'Açıklama yok'}</em><br>
-          Fiyat: <del>${p.oldPrice || '-'}</del> → <strong>${p.newPrice}</strong>₺<br>
-          <small>Kategori ID: ${p.categoryId}</small><br>
-          ${p.images?.length ? `<img src="${p.images[0]}" alt="" style="width:80px;margin-top:5px;">` : ''}
-        `;
-        div.appendChild(urun);
-      });
-    }
-
-    async function sliderKaydet() {
-      const red = document.getElementById('sliderKirmizi').value.trim();
-      const green = document.getElementById('sliderYesil').value.trim();
-      alert(`📝 Kırmızı Slider: ${red}\n📝 Yeşil Slider: ${green}`);
-      // JSON'a yazmak ileriki adımda yapılacak
-    }
-
-    window.onload = () => {
+  async function kategoriEkle() {
+    const ad = document.getElementById('kategoriAd').value.trim();
+    if (!ad) return alert('Kategori adı girin.');
+    const response = await fetch('/api/categories', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: ad })
+    });
+    const result = await response.json();
+    if (result.success) {
       kategoriListele();
       kategoriDoldurSelect();
+      kategoriSelectYenile();
+      document.getElementById('kategoriAd').value = '';
+    } else alert(result.error || 'Hata oluştu.');
+  }
+
+  async function kategoriListele() {
+    const res = await fetch('/api/categories');
+    const categories = await res.json();
+    const div = document.getElementById('kategoriListesi');
+    div.innerHTML = '';
+    categories.forEach(k => {
+      const item = document.createElement('div');
+      item.textContent = `• ${k.name}`;
+      // Alt kategoriler varsa göster
+      if (k.subcategories && k.subcategories.length) {
+        const ul = document.createElement('ul');
+        k.subcategories.forEach(sub => {
+          const li = document.createElement('li');
+          li.textContent = `- ${sub.name}`;
+          ul.appendChild(li);
+        });
+        item.appendChild(ul);
+      }
+      div.appendChild(item);
+    });
+  }
+
+  async function kategoriDoldurSelect() {
+    const res = await fetch('/api/categories');
+    const categories = await res.json();
+    const select = document.getElementById('urunKategori');
+    select.innerHTML = '<option value="">Kategori Seç</option>';
+    categories.forEach(cat => {
+      const option = document.createElement('option');
+      option.value = cat.id;
+      option.textContent = cat.name;
+      select.appendChild(option);
+    });
+  }
+
+  async function kategoriSelectYenile() {
+    const res = await fetch('/api/categories');
+    const categories = await res.json();
+    const select = document.getElementById('anaKategoriSec');  // Alt kategori için ana kategori select kutusu
+    select.innerHTML = '<option value="">Ana kategori seç</option>';
+    categories.forEach(cat => {
+      const option = document.createElement('option');
+      option.value = cat.id;
+      option.textContent = cat.name;
+      select.appendChild(option);
+    });
+  }
+
+  async function urunEkle() {
+    const title = document.getElementById('urunBaslik').value.trim();
+    const description = document.getElementById('urunAciklama').value.trim();
+    const oldPrice = document.getElementById('urunEskiFiyat').value;
+    const newPrice = document.getElementById('urunYeniFiyat').value;
+    const imageInput = document.getElementById('urunGorsel').value.trim();
+    const categoryId = document.getElementById('urunKategori').value;
+    const images = imageInput ? imageInput.split(',').map(i => i.trim()) : [];
+
+    if (!title || !newPrice || !categoryId) {
+      return alert("Başlık, Yeni Fiyat ve Kategori zorunludur.");
+    }
+
+    const response = await fetch('/api/products', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ title, description, oldPrice, newPrice, images, categoryId })
+    });
+
+    const result = await response.json();
+    if (result.success) {
+      alert("✅ Ürün eklendi.");
+      temizleForm();
       urunListele();
-    };
-  </script>
+    } else {
+      alert(result.error || 'Bir hata oluştu.');
+    }
+  }
+
+  async function urunGuncelle() {
+    const id = window.guncellenenUrunID;
+    if (!id) return alert("ID bulunamadı!");
+
+    const title = document.getElementById('urunBaslik').value.trim();
+    const description = document.getElementById('urunAciklama').value.trim();
+    const oldPrice = document.getElementById('urunEskiFiyat').value;
+    const newPrice = document.getElementById('urunYeniFiyat').value;
+    const imageInput = document.getElementById('urunGorsel').value.trim();
+    const categoryId = document.getElementById('urunKategori').value;
+    const images = imageInput ? imageInput.split(',').map(i => i.trim()) : [];
+
+    const response = await fetch(`/api/products/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ title, description, oldPrice, newPrice, images, categoryId })
+    });
+
+    const result = await response.json();
+    if (result.success) {
+      alert("✅ Ürün güncellendi.");
+      temizleForm();
+      urunListele();
+      const btn = document.querySelector('#urun button.save');
+      btn.textContent = "Ürün Ekle";
+      btn.onclick = urunEkle;
+      window.guncellenenUrunID = null;
+    } else {
+      alert(result.error || "Hata oluştu.");
+    }
+  }
+
+  function urunDuzenle(p) {
+    document.getElementById('urunBaslik').value = p.title || '';
+    document.getElementById('urunAciklama').value = p.description || '';
+    document.getElementById('urunEskiFiyat').value = p.oldPrice || '';
+    document.getElementById('urunYeniFiyat').value = p.newPrice || '';
+    document.getElementById('urunGorsel').value = (p.images || []).join(', ');
+    document.getElementById('urunKategori').value = p.categoryId || '';
+
+    window.guncellenenUrunID = p.id;
+
+    const btn = document.querySelector('#urun button.save');
+    btn.textContent = "Güncelle";
+    btn.onclick = urunGuncelle;
+  }
+
+  function temizleForm() {
+    document.getElementById('urunBaslik').value = '';
+    document.getElementById('urunAciklama').value = '';
+    document.getElementById('urunEskiFiyat').value = '';
+    document.getElementById('urunYeniFiyat').value = '';
+    document.getElementById('urunGorsel').value = '';
+    document.getElementById('urunKategori').value = '';
+  }
+
+  async function urunSil(id) {
+    if (!confirm("Silmek istiyor musunuz?")) return;
+    const res = await fetch(`/api/products/${id}`, { method: 'DELETE' });
+    const result = await res.json();
+    if (result.success) urunListele();
+    else alert(result.error || "Silme başarısız.");
+  }
+
+  async function altKategoriEkle() {
+    const parentId = document.getElementById('anaKategoriSec').value;
+    const name = document.getElementById('altKategoriAd').value.trim();
+    const count = parseInt(document.getElementById('altKategoriUrunSayisi').value);
+
+    if (!parentId || !name) return alert("Ana kategori ve alt kategori adı zorunludur.");
+
+    const res = await fetch(`/api/categories/${parentId}/subcategories`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, count })
+    });
+
+    const result = await res.json();
+    if (result.success) {
+      kategoriListele();
+      kategoriDoldurSelect();
+      kategoriSelectYenile();
+      document.getElementById('altKategoriAd').value = '';
+      document.getElementById('altKategoriUrunSayisi').value = '';
+    } else {
+      alert(result.error || 'Alt kategori eklenemedi.');
+    }
+  }
+
+  async function urunListele() {
+    const res = await fetch('/api/products');
+    const products = await res.json();
+    const div = document.getElementById('urunListesi');
+    div.innerHTML = '';
+    if (!products.length) {
+      div.innerHTML = '<p>Henüz ürün yok.</p>';
+      return;
+    }
+    products.forEach(p => {
+      const urun = document.createElement('div');
+      urun.style.borderBottom = "1px solid #ccc";
+      urun.style.padding = "10px";
+      urun.innerHTML = `
+        <strong>${p.title}</strong><br>
+        <em>${p.description || 'Açıklama yok'}</em><br>
+        <del>${p.oldPrice || '-'}</del> → <strong>${p.newPrice}</strong>₺<br>
+        <small>Kategori ID: ${p.categoryId}</small><br>
+        ${p.images?.length ? `<img src="${p.images[0]}" style="width:80px;">` : ''}
+        <br>
+        <button onclick="urunSil(${p.id})" style="margin-top:5px;background:#e74c3c;color:#fff;border:none;padding:5px 10px;border-radius:4px;">Sil</button>
+        <button onclick='urunDuzenle(${JSON.stringify(p)})' style="margin-top:5px;background:#f39c12;color:#fff;border:none;padding:5px 10px;border-radius:4px;">Düzenle</button>
+      `;
+      div.appendChild(urun);
+    });
+  }
+
+  async function sliderKaydet() {
+    const red = document.getElementById('sliderKirmizi').value.trim();
+    const green = document.getElementById('sliderYesil').value.trim();
+
+    const res = await fetch('/api/sliders', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ red, green })
+    });
+
+    const result = await res.json();
+    if (result.success) {
+      alert("✅ Slider başlıkları kaydedildi.");
+    } else {
+      alert(result.error || "Hata oluştu.");
+    }
+  }
+
+  async function sliderGetir() {
+    const res = await fetch('/api/sliders');
+    const sliders = await res.json();
+    document.getElementById('sliderKirmizi').value = sliders.red || '';
+    document.getElementById('sliderYesil').value = sliders.green || '';
+  }
+
+  window.onload = () => {
+    kategoriListele();
+    kategoriDoldurSelect();
+    kategoriSelectYenile();
+    urunListele();
+    sliderGetir();
+  };
+</script>
+
 </body>
 </html>
