@@ -6,12 +6,14 @@ const getSliders = (req, res) => {
 };
 
 const saveSliders = (req, res) => {
-  const { red, green } = req.body;
-  if (!red || !green) {
-    return res.status(400).json({ error: "Her iki slider başlığı zorunludur." });
+  // İstek gövdesinden doğrudan 'red' ve 'green' anahtarlarını kullanın
+  const { red, green } = req.body; // redSliders ve greenSliders yerine değiştirildi
+
+  if (!Array.isArray(red) || !Array.isArray(green)) { // 'red' ve 'green' kontrolü
+    return res.status(400).json({ error: "Slider verileri dizi olmalı." });
   }
 
-  const sliders = { red, green };
+  const sliders = { red, green }; // 'red' ve 'green' anahtarlarıyla kaydedin
   writeJSON('sliders.json', sliders);
   res.json({ success: true });
 };

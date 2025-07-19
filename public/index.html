@@ -2,11 +2,11 @@
 <html lang="tr">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Atanıyorum Hocam - Ürünler</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/style.css"> <!-- Bunu da yazacağız -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
   <style>
     .kayan-yazi {
       background: #bada00;
@@ -46,55 +46,141 @@
       font-weight: 400;
     }
 
-    .copyright-bar {
-      background-color: #000;
+    #slider-red,
+    #slider-green {
+      position: relative;
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 8px 0;
+    }
+
+    #slider-red span,
+    #slider-green span {
+      display: inline-block;
+      margin-right: 50px;
+      padding-left: 100%;
+      animation: kaydir 15s linear infinite;
+    }
+
+    /* Sayfa yüksekliği ve margin-padding sıfırla */
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Ana container: footer hariç kalan alanı kaplar, footer en altta kalır */
+    body>div.container {
+      min-height: calc(100vh - 150px);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Footer */
+    footer {
+      flex-shrink: 0;
+      background: #f8f9fa;
+      padding: 40px 20px 10px;
+      width: 100%;
+    }
+
+    /* Üst ikonlar bölümü */
+    .info-icons {
+      display: flex;
+      justify-content: center;
+      gap: 80px;
+      padding: 30px 10px 20px;
       font-size: 0.9rem;
-      width: 100vw;   
+      color: #000;
+    }
+
+    .info-icons div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-weight: 500;
+    }
+
+    .info-icons i {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      color: black;
+    }
+
+    /* Footer sütunlar */
+    footer .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    footer .footer-column {
+      flex: 1 1 200px;
+      min-width: 150px;
+      color: #555;
+    }
+
+    footer .footer-column h6 {
+      font-weight: 700;
+      color: #000;
+      margin-bottom: 10px;
+    }
+
+    footer .footer-column a {
+      color: #999;
+      text-decoration: none;
+      display: block;
+      margin-bottom: 5px;
+      font-size: 0.9rem;
+    }
+
+    footer .footer-column a:hover {
+      text-decoration: underline;
+    }
+
+    /* Footer alt bar */
+    footer .footer-bottom {
+      text-align: center;
+      font-size: 0.85rem;
+      color: white;
+      background: black;
+      padding: 10px 0;
+      margin-top: 30px;
     }
   </style>
-  <link rel="icon" type="image/png" href="images/header-logo.png">
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
-  <!-- Bootstrap Icons -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="icon" type="image/png" href="images/header-logo.png" />
 </head>
 
 <body>
-
-  <!-- Üst kampanya alanı -->
-  <div class="bg-danger text-white text-center p-2 fw-bold">
-    1000 TL VE ÜZERİ SİPARİŞLERDE KARGO ÜCRETSİZ
-  </div>
+  <!-- Üst kampanya alanı (kırmızı slider) -->
+  <div class="bg-danger text-white text-center fw-bold" id="slider-red"></div>
 
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm">
     <div class="container d-flex justify-content-between align-items-center">
       <a class="navbar-brand d-flex align-items-center" href="/">
-        <img src="/images/header-logo.png" alt="logo" width="150" class="me-2">
+        <img src="/images/header-logo.png" alt="logo" width="150" class="me-2" />
         <span class="fw-bold"></span>
       </a>
       <div class="d-flex align-items-center">
-        <!-- Arama kutusu kaldırıldı -->
         <a href="#" class="me-3"><i class="bi bi-search text-dark fs-5"></i></a>
         <a href="/login.html" class="me-3"><i class="bi bi-person text-dark fs-5"></i></a>
         <a href="#" class="position-relative">
           <i class="bi bi-cart text-dark fs-5"></i>
-          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-            0
-          </span>
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0</span>
         </a>
       </div>
     </div>
   </nav>
 
-  <!-- Kayan yeşil bilgi -->
-  <div class="kayan-yazi">
-    <span>2025 –2026 YILLIK EĞİTİM KAMPLARIMIZ SATIŞTADIR. GEÇEN YIL ÇOK YARARLI OLAN BU EĞİTİMLERDEN SİZ DE BU YIL
-      FAYDALANIN!</span>
-  </div>
+  <!-- Yeşil slider kayan yazı -->
+  <div class="kayan-yazi" id="slider-green"></div>
 
-  <!-- Ürün Sayfası -->
+  <!-- Ana container -->
   <div class="container my-4">
     <div class="row">
       <!-- Sol Kategori Paneli -->
@@ -102,14 +188,72 @@
         <h4 class="mb-3">
           Tüm Ürünler <small id="product-count" class="text-muted"></small>
         </h4>
-        <input type="text" class="form-control mb-3" placeholder="Ne aramıştınız?">
+        <input type="text" class="form-control mb-3" placeholder="Ne aramıştınız?" />
         <h6>Alt Kategoriler</h6>
-        <ul class="list-group">
-          <li class="list-group-item d-flex justify-content-between align-items-center">Canlı Ders <span
-              class="badge bg-dark rounded-pill">11</span></li>
-          <li class="list-group-item d-flex justify-content-between align-items-center">Kitaplar <span
-              class="badge bg-dark rounded-pill">16</span></li>
-        </ul>
+        <ul class="list-group" id="category-list"></ul>
+
+        <script>
+          async function kategoriListele() {
+            try {
+              const res = await fetch('/api/categories');
+              if (!res.ok) throw new Error('Kategori verisi alınamadı');
+              const categories = await res.json();
+
+              const ulSidebar = document.getElementById('category-list');
+              ulSidebar.innerHTML = '';
+
+              categories.forEach(cat => {
+                // Ana kategori li
+                const li = document.createElement('li');
+                li.className = 'list-group-item';
+                li.style.cursor = 'pointer';
+
+                // Ana kategori başlığı
+                const titleDiv = document.createElement('div');
+                titleDiv.textContent = `${cat.name} (${cat.productCount || 0})`;
+                titleDiv.style.fontWeight = 'bold';
+                titleDiv.style.userSelect = 'none';
+
+                // Alt kategori listesini gizli oluştur
+                const subUl = document.createElement('ul');
+                subUl.style.listStyleType = 'none';
+                subUl.style.paddingLeft = '15px';
+                subUl.style.marginTop = '5px';
+                subUl.style.display = 'none'; // gizli başlangıçta
+
+                if (cat.subcategories && cat.subcategories.length) {
+                  cat.subcategories.forEach(sub => {
+                    const subLi = document.createElement('li');
+                    subLi.textContent = `${sub.name} (${sub.productCount || 0})`;
+                    subUl.appendChild(subLi);
+                  });
+                } else {
+                  const noSubLi = document.createElement('li');
+                  noSubLi.textContent = '(Alt kategori yok)';
+                  subUl.appendChild(noSubLi);
+                }
+
+                // Tıklayınca alt kategori aç/kapa
+                titleDiv.addEventListener('click', () => {
+                  if (subUl.style.display === 'none') {
+                    subUl.style.display = 'block';
+                  } else {
+                    subUl.style.display = 'none';
+                  }
+                });
+
+                li.appendChild(titleDiv);
+                li.appendChild(subUl);
+                ulSidebar.appendChild(li);
+              });
+            } catch (error) {
+              console.error('Kategori listeleme hatası:', error);
+            }
+          }
+
+          document.addEventListener('DOMContentLoaded', kategoriListele);
+        </script>
+
       </div>
 
       <!-- Ürünler -->
@@ -124,68 +268,188 @@
         </div>
 
         <div class="row" id="product-list">
-          <!-- Ürün kartları buraya dinamik olarak JS ile eklenecek -->
+          <!-- Ürün kartları buraya JS ile gelecek -->
         </div>
       </div>
     </div>
   </div>
 
-  <footer class="bg-light py-5 mt-5">
+  <!-- Üst ikonlar bölümü -->
+  <div class="info-icons">
+    <div>
+      <i class="bi bi-shield-lock-fill"></i>
+      <p>256 Bit SSL ile güvende alışveriş</p>
+    </div>
+    <div>
+      <i class="bi bi-truck"></i>
+      <p>1000 TL ve üzeri siparişlerde kargo bedava</p>
+    </div>
+    <div>
+      <i class="bi bi-arrow-counterclockwise"></i>
+      <p>14 iş günü içerisinde iade</p>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
     <div class="container">
-      <div class="row text-center mb-4">
-        <div class="col-12 col-md-4 mb-3 mb-md-0">
-          <i class="bi bi-shield-lock-fill fs-2"></i>
-          <p class="mt-2 mb-0">256 Bit SSL ile güvenli alışveriş</p>
-        </div>
-        <div class="col-12 col-md-4 mb-3 mb-md-0">
-          <i class="bi bi-truck fs-2"></i>
-          <p class="mt-2 mb-0">1000 TL üzeri kargo bedava</p>
-        </div>
-        <div class="col-12 col-md-4">
-          <i class="bi bi-arrow-counterclockwise fs-2"></i>
-          <p class="mt-2 mb-0">14 gün içinde iade</p>
-        </div>
+      <div class="footer-column">
+        <h6>Kategoriler</h6>
+        <ul id="footer-category-list" style="list-style:none; padding-left:0;">
+          <!-- Footer kategoriler JS ile gelecek -->
+        </ul>
       </div>
 
-      <div class="row text-center text-md-start mb-4">
-        <div class="col-6 col-md-3">
-          <h6 class="fw-bold">Kategoriler</h6>
-          <p class="mb-1">Anasayfa</p>
-        </div>
-        <div class="col-6 col-md-3">
-          <h6 class="fw-bold">Hesabım</h6>
-          <p class="mb-1"><a href="/login.html" class="text-decoration-none text-dark">Giriş Yap</a></p>
-          <p><a href="/register.html" class="text-decoration-none text-dark">Kayıt Ol</a></p>
-        </div>
-        <div class="col-6 col-md-3">
-          <h6 class="fw-bold">Hakkımızda</h6>
-          <p class="mb-1"><a href="/iletisim.html" class="text-decoration-none text-dark">İletişim</a></p>
-          <p class="mb-1"><a href="/sss.html" class="text-decoration-none text-dark">S.S.S</a></p>
-          <p><a href="/bizeulasin.html" class="text-decoration-none text-dark">Bize Ulaşın</a></p>
-        </div>
-        <div class="col-6 col-md-3">
-          <h6 class="fw-bold">Sözleşmeler</h6>
-          <p class="mb-1"><a href="/iade-politikasi.html" class="text-decoration-none text-dark">İade Politikası</a></p>
-          <p class="mb-1"><a href="/gizlilik.html" class="text-decoration-none text-dark">Gizlilik</a></p>
-          <p><a href="/mesafeli-satis.html" class="text-decoration-none text-dark">Mesafeli Satış</a></p>
-        </div>
+      <div class="footer-column">
+        <h6>Hesabım</h6>
+        <a href="/login.html">Giriş Yap</a>
+        <a href="/register.html">Kayıt Ol</a>
       </div>
 
-      <div class="d-flex justify-content-center gap-3 mb-3">
-        <a href="https://facebook.com" target="_blank" class="text-dark fs-4"><i class="bi bi-facebook"></i></a>
-        <a href="https://instagram.com" target="_blank" class="text-dark fs-4"><i class="bi bi-instagram"></i></a>
+      <div class="footer-column">
+        <h6>Hakkımızda</h6>
+        <a href="/iletisim.html">İletişim</a>
+        <a href="/sss.html">S.S.S</a>
+        <a href="/bizeulasin.html">Bize Ulaşın</a>
       </div>
 
-      <div class="copyright-bar text-center text-white py-2">
-        ©2025 Tüm Hakları Saklıdır.
+      <div class="footer-column">
+        <h6>Sözleşmeler</h6>
+        <a href="/mesafeli-satis.html">Mesafeli Satış Sözleşmesi</a>
+        <a href="/gizlilik.html">Gizlilik Sözleşmesi</a>
+        <a href="/iade-politikasi.html">İade Politikası</a>
       </div>
     </div>
+
+    <div class="footer-bottom">©2025 Tüm Hakları Saklıdır.</div>
   </footer>
 
+  <script>
+    // Sliderları yükle
+    document.addEventListener('DOMContentLoaded', () => {
+      fetch('/api/sliders')
+        .then(res => res.json())
+        .then(sliders => {
+          const redContainer = document.getElementById('slider-red');
+          const greenContainer = document.getElementById('slider-green');
 
-  <!-- Bootstrap Icons -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-  <script src="js/main.js"></script> <!-- Ürünleri buradan ekleyeceğiz -->
+          if (Array.isArray(sliders.red)) {
+            redContainer.innerHTML = sliders.red
+              .map(text => `<span>${text}</span>`)
+              .join('');
+          }
+
+          if (Array.isArray(sliders.green)) {
+            greenContainer.innerHTML = sliders.green
+              .map(text => `<span>${text}</span>`)
+              .join('');
+          }
+        })
+        .catch(err => console.error('Sliderlar yüklenirken hata:', err));
+    });
+
+    // Kategorileri backendden çekip soldaki listeye ve footer'a doldur
+    async function kategoriListele() {
+      try {
+        const res = await fetch('/api/categories');
+        if (!res.ok) throw new Error('Kategori verisi alınamadı');
+        const categories = await res.json();
+
+        const ulSidebar = document.getElementById('category-list');
+        const ulFooter = document.getElementById('footer-category-list');
+
+        ulSidebar.innerHTML = '';
+        ulFooter.innerHTML = '';
+
+        categories.forEach(cat => {
+          // Sidebar
+          const liSidebar = document.createElement('li');
+          liSidebar.className = 'list-group-item d-flex justify-content-between align-items-center';
+          liSidebar.textContent = cat.name;
+          const badge = document.createElement('span');
+          badge.className = 'badge bg-dark rounded-pill';
+          badge.textContent = cat.productCount || 0;
+          liSidebar.appendChild(badge);
+          ulSidebar.appendChild(liSidebar);
+
+          // Footer
+          const liFooter = document.createElement('li');
+          const a = document.createElement('a');
+          a.href = '#'; // İstersen link verebilirsin
+          a.textContent = cat.name;
+          liFooter.appendChild(a);
+          ulFooter.appendChild(liFooter);
+        });
+      } catch (error) {
+        console.error('Kategori listeleme hatası:', error);
+      }
+    }
+
+    // Sayfa yüklendiğinde kategori listelemesini başlat
+    document.addEventListener('DOMContentLoaded', kategoriListele);
+    async function urunListele() {
+    try {
+      const res = await fetch('/api/products');
+      if (!res.ok) throw new Error(`Ürünler alınamadı: ${res.statusText}`);
+      const products = await res.json();
+
+      const container = document.getElementById('product-list');
+      const countText = document.getElementById('product-count');
+      container.innerHTML = '';
+      countText.textContent = `(${products.length} ürün)`;
+
+      if (!products.length) {
+        container.innerHTML = '<p>Henüz ürün yok.</p>';
+        return;
+      }
+
+      products.forEach(p => {
+        const col = document.createElement('div');
+        col.className = 'col-md-4';
+
+        const card = document.createElement('div');
+        card.className = 'card h-100 shadow-sm';
+
+        const img = document.createElement('img');
+        img.className = 'card-img-top';
+        img.src = p.images && p.images.length ? p.images[0] : '/images/default.png';
+        img.alt = p.title;
+
+        const cardBody = document.createElement('div');
+        cardBody.className = 'card-body d-flex flex-column';
+
+        const title = document.createElement('h5');
+        title.className = 'card-title';
+        title.textContent = p.title;
+
+        const desc = document.createElement('p');
+        desc.className = 'card-text';
+        desc.textContent = p.description || '';
+
+        const price = document.createElement('div');
+        price.innerHTML = `
+          <del class="text-muted">${p.oldPrice}₺</del>
+          <strong class="ms-2">${p.newPrice}₺</strong>
+        `;
+
+        cardBody.appendChild(title);
+        cardBody.appendChild(desc);
+        cardBody.appendChild(price);
+        card.appendChild(img);
+        card.appendChild(cardBody);
+        col.appendChild(card);
+        container.appendChild(col);
+      });
+
+    } catch (error) {
+      console.error('Ürünler yüklenirken hata:', error);
+      document.getElementById('product-list').innerHTML = '<p>Ürünler yüklenemedi.</p>';
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', urunListele);
+  </script>
+
 </body>
 
 </html>

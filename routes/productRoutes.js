@@ -6,8 +6,9 @@ const { upload, getProducts, addProduct, deleteProduct, updateProduct } = requir
 // 🔹 GET → Tüm ürünleri getir
 router.get('/', getProducts);
 
-// 🔸 POST → Yeni ürün ekle (görselli)
-router.post('/', upload.single('image'), addProduct);
+// Çoklu dosya yükleme ve ürün ekleme
+// 'images' alanı Multer ayarındaki `upload.array('images', 5)` ile eşleşmeli.
+router.post('/', upload.array('images', 5), addProduct);
 
 // 🔻 DELETE → Ürün sil
 router.delete('/:id', deleteProduct);

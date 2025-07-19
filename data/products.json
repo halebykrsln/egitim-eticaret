@@ -1,13 +1,15 @@
 [
   {
-    "id": 1752844318557,
-    "title": "aaaaaaa",
-    "description": "aaaaaaaa",
-    "oldPrice": 4,
-    "newPrice": 10,
-    "images": [],
-    "categoryId": "1752793562091",
-    "createdAt": "2025-07-18T13:11:58.557Z",
-    "updatedAt": "2025-07-18T13:21:19.139Z"
+    "id": 1752938523841,
+    "title": "Oya Öğretmen ile 1.Sınıftan 2.Sınıfa Geçenler için Problem Çözme Kampı",
+    "description": "🎯 1. Sınıftan 2. Sınıfa Geçenler İçin Problem Çözme Kampı\n📘 Oya Öğretmen ile 20 Derslik Matematik Kampı – Kitap Dahil Sadece 399₺!\n\nBu yaz tatilinde çocuğunuz hem eğlenecek hem de matematikteki temel problem çözme becerilerini geliştirecek!\nOya Öğretmen’in anlatımıyla hazırlanan bu özel kampta, çocuklar yeni sınıfa güvenle hazırlanacak.\n\n🗓 Tarih Aralığı: 30 Temmuz 2025 – 28 Ağustos 2025\n🧭 Ders Günleri: Çarşamba ve Perşembe\n⏰ Saat: 11:00 – 12:10 (2 ders + teneffüs)\nDevamını Göster",
+    "oldPrice": 0,
+    "newPrice": 14,
+    "images": [
+      "/images/images-1752938523827-744780407.png"
+    ],
+    "categoryId": "1752858231464",
+    "createdAt": "2025-07-19T15:22:03.842Z",
+    "updatedAt": "2025-07-19T15:22:33.566Z"
   }
 ]
