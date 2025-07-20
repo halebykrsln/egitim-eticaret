@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1752858241934,
+    "name": "kitaplar",
+    "subcategories": [
+      {
+        "id": 1752858427515,
+        "name": "1.sınıf",
+        "count": 0
+      }
+    ]
+  },
+  {
+    "id": 1752858659630,
+    "name": "canlı",
+    "subcategories": []
+  }
+]

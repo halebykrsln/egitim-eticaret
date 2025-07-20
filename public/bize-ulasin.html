@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bize Ulaşın - Online Okulun</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .contact-wrapper {
+      padding: 60px 0;
+    }
+
+    .contact-title {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .form-label {
+      font-weight: 500;
+    }
+
+    .btn-dark {
+      width: 100%;
+      font-weight: bold;
+    }
+
+    .navbar .bi {
+      color: black !important;
+    }
+
+    .navbar-brand img {
+      height: 50px;
+    }
+
+    footer a.text-link {
+      color: #333;
+      text-decoration: none;
+    }
+
+    footer a.text-link:hover {
+      text-decoration: underline;
+    }
+
+    /* Yukarı Çık Butonu */
+    #scrollBtn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 99;
+      border: none;
+      outline: none;
+      background-color: black;
+      color: white;
+      cursor: pointer;
+      padding: 10px 15px;
+      border-radius: 50%;
+      font-size: 18px;
+      display: none;
+      transition: opacity 0.3s ease;
+    }
+
+    #scrollBtn:hover {
+      background-color: #333;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🔸 Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center" href="/">
+        <img src="/images/header-logo.png" alt="logo" />
+      </a>
+      <div class="d-flex align-items-center">
+        <a href="#" class="me-3"><i class="bi bi-search fs-5"></i></a>
+        <a href="/login.html" class="me-3"><i class="bi bi-person fs-5"></i></a>
+        <a href="#" class="position-relative">
+          <i class="bi bi-cart fs-5"></i>
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 🔹 Form Alanı -->
+  <div class="container contact-wrapper">
+    <div class="text-center mb-4">
+      <h2 class="contact-title">Bize Ulaşın</h2>
+      <p>Görüş, öneri ya da şikayetiniz varsa aşağıdaki formu doldurabilirsiniz.</p>
+    </div>
+    <form>
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label">* Ad</label>
+          <input type="text" class="form-control" required />
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">* Soyad</label>
+          <input type="text" class="form-control" required />
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">* Email</label>
+          <input type="email" class="form-control" required />
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Telefon</label>
+          <div class="input-group">
+            <span class="input-group-text">
+              <img src="https://flagcdn.com/w40/tr.png" width="20" />
+            </span>
+            <span class="input-group-text">+90</span>
+            <input type="tel" class="form-control" />
+          </div>
+        </div>
+        <div class="col-12">
+          <label class="form-label">* Mesaj</label>
+          <textarea class="form-control" rows="4" required></textarea>
+        </div>
+        <div class="col-12 form-check mt-2">
+          <input class="form-check-input" type="checkbox" id="kvkkCheck" required />
+          <label class="form-check-label" for="kvkkCheck">
+            Kişisel verilerin korunması kanununu <a href="#">okudum, onaylıyorum</a>
+          </label>
+        </div>
+        <div class="col-12 mt-3">
+          <button type="submit" class="btn btn-dark">GÖNDER</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <!-- 🔺 Yukarı Çık Butonu -->
+  <button onclick="scrollToTop()" id="scrollBtn" title="Yukarı Çık">
+    <i class="bi bi-arrow-up"></i>
+  </button>
+
+  <!-- 🔸 Footer -->
+  <footer class="pt-5 bg-light mt-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3 mb-3">
+          <h5 class="mt-3">Kategoriler</h5>
+          <ul class="list-unstyled">
+            <li><a href="/" class="text-link">Anasayfa</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3 mb-3">
+          <h5>Hesabım</h5>
+          <ul class="list-unstyled">
+            <li><a href="/login.html" class="text-link">Giriş Yap</a></li>
+            <li><a href="/register.html" class="text-link">Kayıt Ol</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3 mb-3">
+          <h5>Hakkımızda</h5>
+          <ul class="list-unstyled">
+            <li><a href="/iletisim.html" class="text-link">İletişim</a></li>
+            <li><a href="/sss.html" class="text-link">S.S.S</a></li>
+            <li><a href="/bize-ulasin.html" class="text-link">Bize Ulaşın</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3 mb-3">
+          <h5>Sözleşmeler</h5>
+          <ul class="list-unstyled">
+            <li><a href="#" class="text-link">Mesafeli Satış Sözleşmesi</a></li>
+            <li><a href="#" class="text-link">Gizlilik Sözleşmesi</a></li>
+            <li><a href="#" class="text-link">İade Politikası</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="text-center bg-dark text-white py-3 mt-3">
+      <small>© 2025 Tüm Hakları Saklıdır.</small>
+    </div>
+  </footer>
+
+  <!-- 🔹 Yukarı Çık Script -->
+  <script>
+    window.onscroll = function () {
+      const btn = document.getElementById("scrollBtn");
+      if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+        btn.style.display = "block";
+      } else {
+        btn.style.display = "none";
+      }
+    };
+
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
+
+</body>
+</html>

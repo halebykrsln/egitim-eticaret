@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ürün Detayı - Atanıyorum Hocam</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    .badge-discount {
+      background-color: green;
+      color: white;
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.25rem;
+      font-size: 0.9rem;
+      font-weight: bold;
+    }
+
+    .product-meta {
+      display: flex;
+      gap: 20px;
+      margin-top: 15px;
+    }
+
+    .product-meta div {
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    .product-description-box {
+      background-color: #f8f9fa;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+
+    .comment-section {
+      margin-top: 40px;
+    }
+
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    input[type=number] {
+      -moz-appearance: textfield;
+    }
+
+    .navbar .bi {
+    color: black !important;
+    text-shadow: 0 0 1px black;
+    filter: contrast(200%);
+  }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm">
+  <div class="container d-flex justify-content-between align-items-center">
+    <a class="navbar-brand d-flex align-items-center" href="/">
+      <img src="/images/header-logo.png" alt="logo" width="150" class="me-2" />
+    </a>
+    <div class="d-flex align-items-center">
+      <a href="#" class="me-3"><i class="bi bi-search text-dark fs-5"></i></a>
+      <a href="/login.html" class="me-3"><i class="bi bi-person text-dark fs-5"></i></a>
+      <!-- Sepet Butonu -->
+      <button class="btn btn-outline-dark position-relative" data-bs-toggle="offcanvas" data-bs-target="#sepetPaneli">
+        <i class="bi bi-cart3"></i>
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="sepetAdet">0</span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+
+  <div class="container my-5">
+    <div id="productDetail" class="row">
+      <!-- Ürün detayları burada yüklenecek -->
+    </div>
+  </div>
+
+  <div class="container comment-section">
+    <h4>Yorumlar</h4>
+    <p>Bu ürün için henüz yorum yapılmamış.</p>
+    <a href="#">💬 Yorum Yap</a>
+  </div>
+
+  <footer class="bg-dark text-white text-center py-4 mt-5">
+    <p class="mb-0">&copy; 2025 Atanıyorum Hocam. Tüm Hakları Saklıdır.</p>
+  </footer>
+
+  <!-- Sepet Paneli (Offcanvas) -->
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="sepetPaneli">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title">Sepetim</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body d-flex flex-column justify-content-between p-0">
+      <div id="sepetIcerik" class="p-3">
+        <p>Sepetiniz boş.</p>
+      </div>
+      <div class="p-3 border-top">
+        <p class="mb-2">Toplam: <strong id="sepetToplam">₺0.00</strong></p>
+        <div class="d-grid gap-2">
+          <a href="#" class="btn btn-light border text-start">
+            <i class="bi bi-receipt me-2"></i> ÖDEME ADIMINA GİT
+          </a>
+          <a href="/sepet.html" class="btn btn-dark w-100">SEPETE GİT</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    async function urunDetayiGetir() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const id = urlParams.get('id');
+      const res = await fetch('/api/products');
+      const products = await res.json();
+      const urun = products.find(p => p.id == id);
+
+      const container = document.getElementById('productDetail');
+
+      if (!urun) {
+        container.innerHTML = '<p>Ürün bulunamadı.</p>';
+        return;
+      }
+
+      const discountRate = urun.oldPrice && urun.newPrice ? Math.round((1 - urun.newPrice / urun.oldPrice) * 100) : null;
+
+      container.innerHTML = `
+        <div class="col-md-6">
+          <img src="${urun.images?.[0] || '/images/default.png'}" class="img-fluid rounded shadow" alt="${urun.title}">
+        </div>
+        <div class="col-md-6">
+          <h1 class="h5">${urun.title}</h1>
+          <div class="mb-3">
+            ${urun.oldPrice ? `<del class="text-muted">${urun.oldPrice}₺</del>` : ''}
+            <span class="fs-4 text-success ms-2">${urun.newPrice}₺</span>
+            ${discountRate ? `<span class="badge-discount ms-2">%${discountRate}</span>` : ''}
+          </div>
+
+          <div class="d-flex align-items-center gap-2 mb-3">
+            <button class="btn btn-outline-secondary" onclick="adetAzalt()">-</button>
+            <input id="adetInput" type="number" value="1" min="1" class="form-control text-center" style="width: 70px;" readonly>
+            <button class="btn btn-outline-secondary" onclick="adetArttir()">+</button>
+            <button class="btn btn-dark px-4" onclick='sepeteEkle(${JSON.stringify(urun)})'>SEPETE EKLE</button>
+          </div>
+
+          <div class="d-grid gap-2 mb-2">
+            <button class="btn btn-danger">HEMEN AL</button>
+            <a href="https://wa.me/?text=${encodeURIComponent(urun.title + ' - ' + window.location.href)}" target="_blank" class="btn btn-outline-success">
+              <i class="bi bi-whatsapp"></i> WHATSAPP
+            </a>
+          </div>
+
+          <div class="product-meta">
+            <div><i class="bi bi-truck"></i><br>1000 TL üzeri ücretsiz kargo</div>
+            <div><i class="bi bi-arrow-clockwise"></i><br>14 gün içinde iade</div>
+          </div>
+
+          <div class="product-description-box mt-4">
+            <h6>Ürün Açıklaması</h6>
+            <div>${urun.description}</div>
+          </div>
+        </div>
+      `;
+    }
+
+    function adetArttir() {
+      const input = document.getElementById('adetInput');
+      input.value = parseInt(input.value) + 1;
+    }
+
+    function adetAzalt() {
+      const input = document.getElementById('adetInput');
+      if (parseInt(input.value) > 1) {
+        input.value = parseInt(input.value) - 1;
+      }
+    }
+
+    async function sepeteEkle(urun) {
+      const adet = parseInt(document.getElementById('adetInput').value);
+
+      try {
+        const res = await fetch('/api/sepet');
+        let sepet = await res.json();
+
+        const mevcut = sepet.find(item => item.id === urun.id);
+        if (mevcut) {
+          mevcut.adet += adet;
+        } else {
+          sepet.push({
+            id: urun.id,
+            title: urun.title,
+            price: urun.newPrice,
+            image: urun.images?.[0] || '/images/default.png',
+            adet: adet
+          });
+        }
+
+        await fetch('/api/sepet', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(sepet)
+        });
+
+        guncelleSepetPaneli();
+
+        const offcanvas = new bootstrap.Offcanvas(document.getElementById('sepetPaneli'));
+        offcanvas.show();
+      } catch (err) {
+        console.error('Sepet işlemi başarısız:', err);
+      }
+    }
+
+    async function guncelleSepetPaneli() {
+  const res = await fetch('/api/sepet');
+  const sepet = await res.json();
+
+  const sepetIcerik = document.getElementById('sepetIcerik');
+  const sepetToplam = document.getElementById('sepetToplam');
+  const sepetAdet = document.getElementById('sepetAdet'); // ✅ Sepet adeti elemanını al
+
+  if (!sepet.length) {
+    sepetIcerik.innerHTML = '<p>Sepetiniz boş.</p>';
+    sepetToplam.textContent = '₺0.00';
+    sepetAdet.textContent = '0'; // ✅ Eğer sepet boşsa 0 göster
+    return;
+  }
+
+  let html = '';
+  let toplam = 0;
+  let toplamAdet = 0;
+
+  sepet.forEach(item => {
+    toplam += item.price * item.adet;
+    toplamAdet += item.adet;
+
+    html += `
+      <div class="d-flex mb-2">
+        <img src="${item.image}" width="60" class="me-2 rounded shadow-sm">
+        <div>
+          <div>${item.title}</div>
+          <div class="text-muted">Adet: ${item.adet}</div>
+          <div><strong>${(item.price * item.adet).toFixed(2)}₺</strong></div>
+        </div>
+      </div>
+    `;
+  });
+
+  sepetIcerik.innerHTML = html;
+  sepetToplam.textContent = `₺${toplam.toFixed(2)}`;
+  sepetAdet.textContent = toplamAdet; // ✅ Sepetteki toplam ürün sayısını göster
+}
+
+
+    async function adetDegistir(index, degisim) {
+      const res = await fetch('/api/sepet');
+      const sepet = await res.json();
+      if (!sepet[index]) return;
+
+      sepet[index].adet += degisim;
+      if (sepet[index].adet < 1) sepet[index].adet = 1;
+
+      await fetch('/api/sepet', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(sepet)
+      });
+
+      guncelleSepetPaneli();
+    }
+
+    async function urunuSil(index) {
+      const res = await fetch('/api/sepet');
+      let sepet = await res.json();
+
+      sepet.splice(index, 1);
+
+      await fetch('/api/sepet', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(sepet)
+      });
+
+      guncelleSepetPaneli();
+    }
+
+    window.onload = () => {
+      urunDetayiGetir();
+      guncelleSepetPaneli();
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

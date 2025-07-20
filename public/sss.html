@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>S.S.S - Online Okulun</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    main {
+      flex: 1;
+    }
+
+    .text-link {
+      color: black;
+      text-decoration: none;
+    }
+
+    .text-link:hover {
+      text-decoration: underline;
+    }
+
+    .footer-bottom {
+      background-color: #000;
+      color: #fff;
+      text-align: center;
+      padding: 10px 0;
+    }
+
+    .accordion-button:not(.collapsed) {
+      background-color: #f0f0f0;
+    }
+
+    .navbar .bi {
+      color: #000;
+    }
+
+    /* Yukarı Çık Butonu */
+    #scrollBtn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 99;
+      border: none;
+      outline: none;
+      background-color: black;
+      color: white;
+      cursor: pointer;
+      padding: 10px 15px;
+      border-radius: 50%;
+      font-size: 18px;
+      display: none;
+      transition: opacity 0.3s ease;
+    }
+
+    #scrollBtn:hover {
+      background-color: #333;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- 🔹 Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center" href="/">
+        <img src="/images/header-logo.png" alt="logo" height="50" />
+      </a>
+      <div class="d-flex align-items-center">
+        <a href="#" class="me-3"><i class="bi bi-search fs-5"></i></a>
+        <a href="/login.html" class="me-3"><i class="bi bi-person fs-5"></i></a>
+        <a href="#" class="position-relative">
+          <i class="bi bi-cart fs-5"></i>
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 🔸 Sayfa Başlığı ve İçerik -->
+  <main>
+    <div class="container my-5">
+      <h2 class="text-center">Sıkça Sorulan Sorular</h2>
+    </div>
+
+    <div class="container mb-5">
+      <div class="accordion" id="sssAccordion">
+        <div class="accordion-item mb-3">
+          <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+              Hangi sınıfın yaz kampına katılmalıyım?
+            </button>
+          </h2>
+          <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#sssAccordion">
+            <div class="accordion-body">
+              Öğrenciniz şu an hangi sınıfa gidiyorsa o sınıfın yaz kampına katılmalısınız.
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item mb-3">
+          <h2 class="accordion-header" id="headingTwo">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+              Kaçırdığım derslerin kayıtlarını sonradan izleyebilir miyim?
+            </button>
+          </h2>
+          <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#sssAccordion">
+            <div class="accordion-body">
+              Tüm derslerin ders kayıtlarınızı izleyebilirsiniz.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- 🔺 Yukarı Çık Butonu -->
+  <button onclick="scrollToTop()" id="scrollBtn" title="Yukarı Çık">
+    <i class="bi bi-arrow-up"></i>
+  </button>
+
+  <!-- 🔻 Footer -->
+  <footer class="pt-5 bg-light mt-auto">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3 mb-3">
+          <h6>Kategoriler</h6>
+          <ul class="list-unstyled">
+            <li><a href="/" class="text-link">Anasayfa</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3 mb-3">
+          <h6>Hesabım</h6>
+          <ul class="list-unstyled">
+            <li><a href="/login.html" class="text-link">Giriş Yap</a></li>
+            <li><a href="/register.html" class="text-link">Kayıt Ol</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3 mb-3">
+          <h6>Hakkımızda</h6>
+          <ul class="list-unstyled">
+            <li><a href="/iletisim.html" class="text-link">İletişim</a></li>
+            <li><a href="/sss.html" class="text-link">S.S.S</a></li>
+            <li><a href="/bize-ulasin.html" class="text-link">Bize Ulaşın</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3 mb-3">
+          <h6>Sözleşmeler</h6>
+          <ul class="list-unstyled">
+            <li><a href="#" class="text-link">Mesafeli Satış Sözleşmesi</a></li>
+            <li><a href="#" class="text-link">Gizlilik Sözleşmesi</a></li>
+            <li><a href="#" class="text-link">İade Politikası</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <small>© 2025 Tüm Hakları Saklıdır.</small>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    window.onscroll = function () {
+      const btn = document.getElementById("scrollBtn");
+      btn.style.display = (document.documentElement.scrollTop > 200) ? "block" : "none";
+    };
+
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
+</body>
+
+</html>
